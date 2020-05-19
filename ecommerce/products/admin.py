@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Products
+from .models import Products, ProductImage
 
 class ProductAdmin(admin.ModelAdmin):
     date_hierarchy = 'timestamp'
@@ -13,3 +13,4 @@ class ProductAdmin(admin.ModelAdmin):
         model = Products
 
 admin.site.register(Products, ProductAdmin)
+admin.site.register(ProductImage)
