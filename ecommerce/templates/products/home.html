@@ -26,10 +26,11 @@ Welcome to
                     {% endif %}
                 {% endfor %}
 
-                {{ product.id }} -
-                {{ product.title }} :
+                <!-- <a href='{% url "products:single_product" product.slug %}'> -->
+                <a href='{{ product.get_absolute_url }}'>
+                    {{ product.title }} :
+                </a>
                 {{ product.price }}
-                [{{ product.slug }}]
             </div>
         {% cycle ""  ""  "</div></br><hr/><div class='row'>" %}
         {% endfor %}

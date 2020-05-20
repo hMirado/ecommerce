@@ -20,7 +20,7 @@ def single(request, slug):
     try:
         productSlug = Products.objects.get(slug=slug)
         context = {"productSlug": productSlug}
-        template = 'products/single-product.html'
+        template = 'products/single.html'
         return render(request, template, context)
     except:
         raise Http404

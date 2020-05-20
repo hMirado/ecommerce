@@ -1,16 +1,13 @@
 from django.conf import settings
 from django.contrib import admin
 from django.conf.urls.static import static
-from django.urls import path, re_path
+from django.urls import include, path
 from products import views
 admin.autodiscover()
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('products/', views.all, name='products'),
-    re_path('products/(?P<slug>[\w-]+)/', views.single, name='single-product'),
-    # (?P<all_items>.*)
-    # (?p<id>\d+)
+    path('products/', include('products.urls', namespace='products')), # products url
     path('admin/', admin.site.urls),
 ] 
 

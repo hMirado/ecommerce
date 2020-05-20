@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.db import models
 
 # Create your models here.
@@ -20,6 +21,11 @@ class Products(models.Model):
 
     def getPrice(self):
         return self.price
+
+    def get_absolute_url(self):
+        return reverse("products:single_product", kwargs={"slug": self.slug})
+        #return "/products/products/%s/" % (self.slug)
+    
 
     
 class ProductImage(models.Model):
