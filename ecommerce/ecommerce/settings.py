@@ -128,8 +128,22 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static/static_files'),
 )
 
+STATIC_ROOT = (
+    os.path.join(BASE_DIR, 'static/static_root')
+)
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = (
+    os.path.join(BASE_DIR, 'static/media')
+)
+# MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static/media')
+# Si le dossier static ets dans le dossier parent ( avec les bin - .idea - inclue - lib )
+
+'''
+Après avoir indiquer les chemins des fichiers statci on fait  "python manage.py collectstatic"
+Il faut installer angular pour ng & atom pour apm sur mon machin 
+'''
 INTERNAL_IPS = ['127.0.0.1']
