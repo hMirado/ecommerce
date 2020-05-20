@@ -2,4 +2,16 @@
 
 {% block content %}
     <h1>{{ productSlug.title }}</h1>
+    {% for img in images %}
+        {% if img.featured %}
+            <p>Featured</p>
+            <div class="col-sm-12 col-md-6">
+                <img class="img-fluid" src="{{ img.image.url }}" />
+            <div>
+        {% else %}
+            <div class="col-xs-6 col-md-3">
+                <img class="card-img-top img-fluid img-thumbnail" src="{{ img.image.url }}" />
+            <div>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

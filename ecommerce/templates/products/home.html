@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block head_title %}
 Welcome to
@@ -17,22 +18,27 @@ Welcome to
 {% endblock %}
 
 {% block content %}
-    <div class='row'>
+    <div class="row">
         {% for product in products %}
-            <div class='col-sm-4'>
-                {% for item in product.productimage_set.all %}
-                    {% if item.featured %}
-                        <img src="{{ item.image.url }}" />
-                    {% endif %}
-                {% endfor %}
-
-                <!-- <a href='{% url "products:single_product" product.slug %}'> -->
-                <a href='{{ product.get_absolute_url }}'>
-                    {{ product.title }} :
-                </a>
-                {{ product.price }}
+        <div class="col-sm-3 mb-4">
+            <div class="card">
+                {% if product.productimage_set.all %}
+                    {% for item in product.productimage_set.all %} <!-- model.modelNameWithForeignkey_set.all -->
+                        {% if item.featured %}
+                            <img class="card-img-top img-fluid img-thumbnail" src="{{ item.image.url }}" />
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <img class="card-img-top img-fluid img-thumbnail" src="{% static 'img/No_image_available.png' %}" />
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.title }}</h5>
+                    <p class="card-text">{{ product.description|truncatewords:15 }}</p>
+                    <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Voir</a>
+                </div>
             </div>
-        {% cycle ""  ""  "</div></br><hr/><div class='row'>" %}
+        </div>
+        </br>
         {% endfor %}
     </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, Http404
-from .models import Products
+from .models import Products, ProductImage
 
 
 def home(request):
@@ -19,7 +19,9 @@ def all(request):
 def single(request, slug):
     try:
         productSlug = Products.objects.get(slug=slug)
-        context = {"productSlug": productSlug}
+        # images = Products.productimage_set.all()
+        images = ProductImage.objects.filter(product=productSlug)
+        context = {"productSlug": productSlug, "images": images}
         template = 'products/single.html'
         return render(request, template, context)
     except:
