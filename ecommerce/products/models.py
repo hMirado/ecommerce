@@ -33,6 +33,3 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return self.product.title
-
-    #def get_absolute_url(self):
-    #    return reverse( ProductImage_detail", kwargs={"pk": self.pk})

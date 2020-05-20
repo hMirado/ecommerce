@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +26,7 @@ SECRET_KEY = '55o&bxvfjb5dpl5)0k1cs-v-m#mx9l&*+*318*wucd_=byk48m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 # Application definition
@@ -135,9 +136,9 @@ STATIC_ROOT = (
     os.path.join(BASE_DIR, 'static/static_root')
 )
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 MEDIA_ROOT = (
-    os.path.join(BASE_DIR, 'static/media')
+    os.path.join(BASE_DIR, "static/media")
 )
 # MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static/media')
 # Si le dossier static ets dans le dossier parent ( avec les bin - .idea - inclue - lib )
