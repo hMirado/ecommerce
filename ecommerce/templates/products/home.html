@@ -32,7 +32,7 @@ Welcome to
                     <img class="card-img-top img-fluid img-thumbnail" src="{% static 'img/No_image_available.png' %}" />
                 {% endif %}
                 <div class="card-body">
-                    <h5 class="card-title">{{ product.title }}</h5>
+                    <h5 class="card-title">{{ product.title }} - €{{product.price}}</h5>
                     <p class="card-text">{{ product.description|truncatewords:15 }}</p>
                     <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Voir</a>
                 </div>

@@ -1,17 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{ productSlug.title }}</h1>
-    {% for img in images %}
-        {% if img.featured %}
-            <p>Featured</p>
-            <div class="col-sm-12 col-md-6">
-                <img class="img-fluid" src="{{ img.image.url }}" />
-            <div>
-        {% else %}
-            <div class="col-xs-6 col-md-3">
-                <img class="card-img-top img-fluid img-thumbnail" src="{{ img.image.url }}" />
-            <div>
-        {% endif %}
-    {% endfor %}
+    <div class='row'>
+        <div class='col-5'>
+            {% for img in images %}
+                {% if img.featured %}
+                    <div class='row'>
+                        <div class='col'>
+                            <img class="img-fluid" src="{{ img.image.url }}" />
+                            <hr/>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class='row'>
+                {% for img in images %}
+                    {% if not img.featured %}
+                            <div class='col col-md-6'>
+                                <a href='#' class='img-thumbnail'>
+                                    <img class="img-fluid" src="{{ img.image.url }}" />
+                                </a>
+                            </div>
+                    {% endif %}
+                {% endfor %}
+             </div>
+        </div>
+        <div class="col-7">
+            <h1 class='display-4'>
+                {{ productSlug.title }}
+                <button class="btn btn-outline-primary float-right"><a href='#'>Add to cart</a></button>
+                
+            </h1>
+            Price : €{{ productSlug.price}}</br>
+            Shipping: free with €25+ purchase            
+            <hr/>
+            {{ productSlug.description}}
+        </div>
+    </div>
+    
 {% endblock %}
