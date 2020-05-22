@@ -25,25 +25,16 @@ def view(request):
 
 def update_cart(request, slug):
     request.session.set_expiry(120000)
-    # cart = Cart.objects.all()[0]
     try:
         the_id = request.session['cart_id']
-
-    # Miala ilay eny ambany    
-    #     cart = Cart.objects.get(id=the_id)
-    # except Cart.DoesNotExist:
-    #     cart = Cart.objects.create()
-    #     request.session['cart_id'] = cart.id
     except:
         new_cart = Cart()
         new_cart.save()
         request.session['cart_id'] = new_cart.id
         the_id = new_cart.id
 
-    # Miala ito efa mampiasa ilay eo ambony
     try:
         cart = Cart.objects.get(id=the_id)
-        # print(cart)
     except Cart.DoesNotExist:
         cart = None
 
@@ -64,7 +55,7 @@ def update_cart(request, slug):
         new_total += float(item.price)
 
     request.session['items_total'] = cart.products.count()
-    print(cart.products.count())
+    # print(cart.products.count())
     cart.total = new_total
     cart.save()
 
