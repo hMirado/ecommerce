@@ -3,28 +3,33 @@
 {% block content %}
     <div class="row justify-content-center">
         <div class='col-sm-8 align-self-center'>
-            <table class='table table-striped table-bordered'>
-                <thead class='table-dark'>
-                    <th>Items</th>
-                    <th>Price</th>
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                    {% for item in cart.products.all %}
+            {% if empty %}
+                <h1 class="text-center">{{ empty_message }}</h1>
+            {% else %}
+                <h1 class="text-center">{{ empty_message }}</h1>
+                <table class='table table-striped table-bordered'>
+                    <thead class='table-dark'>
+                        <th>Items</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        {% for item in cart.products.all %}
+                            <tr>
+                                <td> {{ item }} </td>
+                                <td> {{ item.price }} </td>
+                                <td><a href="{% url 'carts:update_cart' item.slug %}">Remove</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot  class='text-uppercase font-weight-bold text-danger'>
                         <tr>
-                            <td> {{ item }} </td>
-                            <td> {{ item.price }} </td>
-                            <td><a href="{% url 'carts:update_cart' item.slug %}">Remove</a></td>
+                            <td>Total :</td>
+                            <td colspan='2'> €{{ cart.total }} </td>
                         </tr>
-                    {% endfor %}
-                </tbody>
-                <tfoot  class='text-uppercase font-weight-bold text-danger'>
-                    <tr>
-                        <td>Total :</td>
-                        <td colspan='2'> €{{ cart.total }} </td>
-                    </tr>
-                </tfoot>
-            </table>
+                    </tfoot>
+                </table>
+            {% endif %}
         </div>
     </div>
 {% endblock content %}
