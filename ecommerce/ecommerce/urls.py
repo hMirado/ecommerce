@@ -8,7 +8,7 @@ admin.autodiscover()
 urlpatterns = [
     path('', views.home, name='home'),
     path('products/', include('products.urls', namespace='products')),  # products url
-    # path('products/', include('products.urls', namespace='products')),
+    path('carts/', include('carts.urls', namespace='carts')), # cart url
     path('admin/', admin.site.urls),
 ] 
 
