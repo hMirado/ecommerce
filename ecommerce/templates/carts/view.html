@@ -7,19 +7,21 @@
                 <thead class='table-dark'>
                     <th>Items</th>
                     <th>Price</th>
+                    <th>Action</th>
                 </thead>
                 <tbody>
                     {% for item in cart.products.all %}
                         <tr>
                             <td> {{ item }} </td>
                             <td> {{ item.price }} </td>
+                            <td><a href="{% url 'carts:update_cart' item.slug %}">Remove</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
                 <tfoot  class='text-uppercase font-weight-bold text-danger'>
                     <tr>
-                        <td>Total:</td>
-                        <td> €{{ cart.total }} </td>
+                        <td>Total :</td>
+                        <td colspan='2'> €{{ cart.total }} </td>
                     </tr>
                 </tfoot>
             </table>
