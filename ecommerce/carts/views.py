@@ -20,14 +20,32 @@ def view(request):
         empty_message = "Your cart is empty, please kepp shopping"
         context = {"empty": True, "empty_message": empty_message}
 
-    # cart = Cart.objects.all()[0]
-    # context = {"cart": cart}
     template = "carts/view.html"
     return render(request, template, context)
 
 
-def update_cart(request, slug, qty):
+def update_cart(request, slug):
     request.session.set_expiry(120000)
+
+    try:
+        qty = request.GET.get('qty')
+        update_qty = True
+    except:
+        qty = None
+        update_qty = False
+
+    notes = {}
+    try:
+        color = request.GET.get("color")
+        notes['color'] = color
+    except:
+        color = None
+    try:
+        size = request.GET.get("size")
+        notes['size'] = size
+    except:
+        size = None
+
     try:
         the_id = request.session['cart_id']
     except:
@@ -45,14 +63,20 @@ def update_cart(request, slug, qty):
     except:
         pass
 
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+    # qty = 12
+    cart_item, created = CartItem.objects.get_or_create( cart=cart, product=product)
     if created:
-        print('\n yeah \n')
-    if qty == 0:
-        cart_item.delete()
+        print('YEAH')
+    if update_qty and qty: # if int(qty) = 0
+        if int(qty) == 0:
+            cart_item.delete()
+        else:
+            cart_item.quantity = qty
+            cart_item.notes = notes
+            cart_item.save()
     else:
-        cart_item.quantity = qty
-        cart_item.save()
+        pass
+
     '''
     if cart_item not in cart.items.all():
         # cart.products.add(product)
@@ -64,7 +88,8 @@ def update_cart(request, slug, qty):
 
     new_total = 0.00
     for item in cart.cartitem_set.all():
-        line_total = float(item.product.price) * item.quantity
+        # print(item.quantity)
+        line_total = float(item.product.price) * float(item.quantity)
         new_total += line_total
 
     request.session['items_total'] = cart.cartitem_set.count()

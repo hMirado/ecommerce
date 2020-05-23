@@ -1,5 +1,5 @@
 from django.shortcuts import render, Http404
-from .models import Products, ProductImage
+from .models import Products, ProductImage, Variation
 
 
 def home(request):

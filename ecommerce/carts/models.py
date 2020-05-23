@@ -4,9 +4,10 @@ from products.models import Products
 
 class CartItem(models.Model):
     cart = models.ForeignKey('Cart', null=True, blank=True, on_delete=models.CASCADE)
-    product = models.ForeignKey(Products, blank=True, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-    line_total= models.DecimalField(default=10.99, max_digits=65, decimal_places=2)
+    line_total = models.DecimalField(default=10.99, max_digits=65, decimal_places=2)
+    notes = models.TextField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -24,6 +25,6 @@ class Cart(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
     active = models.BooleanField(default=True)
-    
+
     def __str__(self):
-        return "Cart id: %s" %(self.id)
+        return "Cart id: %s" % (self.id)
