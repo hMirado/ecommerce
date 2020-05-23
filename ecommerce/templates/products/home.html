@@ -22,7 +22,7 @@ Welcome to
                 {% if product.productimage_set.all %}
                     {% for item in product.productimage_set.all %} <!-- model.modelNameWithForeignkey_set.all -->
                         {% if item.featured %}
-                            <div class="image_product" style="
+                            <div class="image_product img-fluid" style="
                                 width: 200px; height: 200px;
                                 background: url('{{ item.image.url }}') no-repeat;
                                 background-size: cover;
@@ -33,13 +33,13 @@ Welcome to
                         {% endif %}
                     {% endfor %}
                 {% else %}
-                        <div class="image_product" style="width: 200px; height: 200px;"></div>
+                        <div class="image_product img-fluid" style="width: 200px; height: 200px;"></div>
                     <!-- <img class="card-img-top img-fluid img-thumbnail" src="{% static 'img/No_image_available.png' %}" /> -->
                 {% endif %}
                 <div class="card-body">
-                    <h5 class="card-title">{{ product.title }} - €{{product.price}}</h5>
-                    <p class="card-text">{{ product.description|truncatewords:15 }}</p>
-                    <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Voir</a>
+                    <h5 class="card-title text-center">{{ product.title }} - €{{product.price}}</h5>
+                    <p class="card-text text-justify">{{ product.description|truncatewords:15 }}</p>
+                    <a href="{{ product.get_absolute_url }}" class="btn btn-outline-primary btn-block">Voir</a>
                 </div>
             </div>
         </div>

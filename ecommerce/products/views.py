@@ -11,7 +11,7 @@ def home(request):
 
 def all(request):
     products = Products.objects.all()
-    context = {"all_products": products}
+    context = {"products": products}
     template = 'products/all.html'
     return render(request, template, context)
 

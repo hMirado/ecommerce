@@ -19,7 +19,7 @@
                                     {% if product.productimage_set.all %}
                                         {% for item in product.productimage_set.all %}
                                             {% if item.featured %}
-                                                <div class='image_product' style="
+                                                <div class='image_product img-fluid' style="
                                                     background: url('{{ item.image.url }}') no-repeat;
                                                     background-size: cover;
                                                     background-position: center;
@@ -27,7 +27,7 @@
                                             {% endif %}
                                         {% endfor %}
                                     {% else %}
-                                        <div class="image_product"></div>
+                                        <div class="image_product img-fluid"></div>
                                     {% endif %}
                                 </td>
                                 <td>

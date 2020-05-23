@@ -1,9 +1,40 @@
 {% extends "base.html" %}
+{% load static %}
 
-<ul>
-    {% block content %}
-        {% for product in all_products %}
-            <li>{{ product }} {{ product.price }}</li>
+{% block head_title %}
+Products ||
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {% for product in products %}
+        <div class="col-sm-3 mb-4">
+            <div class="card">
+                {% if product.productimage_set.all %}
+                    {% for item in product.productimage_set.all %} <!-- model.modelNameWithForeignkey_set.all -->
+                        {% if item.featured %}
+                            <div class="image_product img-fluid" style="
+                                width: 200px; height: 200px;
+                                background: url('{{ item.image.url }}') no-repeat;
+                                background-size: cover;
+                                background-position: center;
+                            "></div>
+                            
+                            <!-- <img class="card-img-top img-fluid img-thumbnail" src="{{ item.image.url }}" /> -->
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                        <div class="image_product img-fluid" style="width: 200px; height: 200px;"></div>
+                    <!-- <img class="card-img-top img-fluid img-thumbnail" src="{% static 'img/No_image_available.png' %}" /> -->
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ product.title }} - €{{product.price}}</h5>
+                    <p class="card-text text-justify">{{ product.description|truncatewords:15 }}</p>
+                    <a href="{{ product.get_absolute_url }}" class="btn btn-outline-primary btn-block">Voir</a>
+                </div>
+            </div>
+        </div>
+        </br>
         {% endfor %}
-    {% endblock %}
-</ul>
+    </div>
+{% endblock %}
