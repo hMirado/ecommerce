@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 from .models import Cart, CartItem
-from products.models import Products
+from products.models import Products, Variation
 
 
 def view(request):
@@ -28,25 +28,6 @@ def update_cart(request, slug):
     request.session.set_expiry(120000)
 
     try:
-        qty = request.GET.get('qty')
-        update_qty = True
-    except:
-        qty = None
-        update_qty = False
-
-    notes = {}
-    try:
-        color = request.GET.get("color")
-        notes['color'] = color
-    except:
-        color = None
-    try:
-        size = request.GET.get("size")
-        notes['size'] = size
-    except:
-        size = None
-
-    try:
         the_id = request.session['cart_id']
     except:
         new_cart = Cart()
@@ -63,37 +44,43 @@ def update_cart(request, slug):
     except:
         pass
 
-    # qty = 12
-    cart_item, created = CartItem.objects.get_or_create( cart=cart, product=product)
-    if created:
-        print('YEAH')
-    if update_qty and qty: # if int(qty) = 0
-        if int(qty) == 0:
+    product_var = [] # product variation
+    if request.method == "POST":
+        qty = request.POST['qty']
+        for item in request.POST:
+            key = item
+            val = request.POST[key]
+            try:
+                v = Variation.objects.get(product=product, category__iexact=key, title__iexact=val)
+                product_var.append(v)
+            except:
+                pass
+
+        cart_item, created = CartItem.objects.get_or_create( cart=cart, product=product)
+        if created:
+            print('CREATED')
+        # if update_qty and qty: # if int(qty) = 0
+        if int(qty) <= 0:
             cart_item.delete()
         else:
+            if len(product_var) > 0:
+                cart_item.variations.clear()
+                for item in product_var:
+                    cart_item.variations.add(item)
             cart_item.quantity = qty
-            cart_item.notes = notes
+        #     cart_item.notes = notes
             cart_item.save()
+        # else:
+        #     pass
+
+        new_total = 0.00
+        for item in cart.cartitem_set.all():
+            line_total = float(item.product.price) * float(item.quantity)
+            new_total += line_total
+
+        request.session['items_total'] = cart.cartitem_set.count()
+        cart.total = new_total
+        cart.save()
+        return HttpResponseRedirect(reverse('carts:my_cart'))
     else:
-        pass
-
-    '''
-    if cart_item not in cart.items.all():
-        # cart.products.add(product)
-        cart.items.add(cart_item)
-    else:
-        # cart.products.remove(product)
-        cart.items.remove(cart_item)
-    '''
-
-    new_total = 0.00
-    for item in cart.cartitem_set.all():
-        # print(item.quantity)
-        line_total = float(item.product.price) * float(item.quantity)
-        new_total += line_total
-
-    request.session['items_total'] = cart.cartitem_set.count()
-    cart.total = new_total
-    cart.save()
-
-    return HttpResponseRedirect(reverse('carts:my_cart'))
+        return HttpResponseRedirect(reverse('carts:my_cart'))
