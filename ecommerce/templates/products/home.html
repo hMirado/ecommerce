@@ -5,9 +5,6 @@
 Welcome to
 {% endblock %}
 
-{% block styles %}
-{% endblock %}
-
 {% block jumbotron %}
     <div class="jumbotron">
         <h1>Hello {{ username_is }}</h1>
@@ -25,11 +22,19 @@ Welcome to
                 {% if product.productimage_set.all %}
                     {% for item in product.productimage_set.all %} <!-- model.modelNameWithForeignkey_set.all -->
                         {% if item.featured %}
-                            <img class="card-img-top img-fluid img-thumbnail" src="{{ item.image.url }}" />
+                            <div class="image_product" style="
+                                width: 200px; height: 200px;
+                                background: url('{{ item.image.url }}') no-repeat;
+                                background-size: cover;
+                                background-position: center;
+                            "></div>
+                            
+                            <!-- <img class="card-img-top img-fluid img-thumbnail" src="{{ item.image.url }}" /> -->
                         {% endif %}
                     {% endfor %}
                 {% else %}
-                    <img class="card-img-top img-fluid img-thumbnail" src="{% static 'img/No_image_available.png' %}" />
+                        <div class="image_product" style="width: 200px; height: 200px;"></div>
+                    <!-- <img class="card-img-top img-fluid img-thumbnail" src="{% static 'img/No_image_available.png' %}" /> -->
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ product.title }} - €{{product.price}}</h5>

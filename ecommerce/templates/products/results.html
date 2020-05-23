@@ -1,8 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Search for : {{ products }}</h1>
-
-    <p>{{ request }}</P
-    
+    <div class="row justify-content-center">
+        <div class='col-sm-8 align-self-center'>
+            {% if products %}
+                <div class="alert alert-success" role="alert">
+                    Search results
+                </div>
+                <table class='table'>
+                    <thead class="thead-dark">
+                        <th scope="col"></th>
+                        <th scope="col" class="text-center">Porduct</th>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                            <tr>
+                                <td style="width:200px; height:200px;">
+                                    {% if product.productimage_set.all %}
+                                        {% for item in product.productimage_set.all %}
+                                            {% if item.featured %}
+                                                <div class='image_product' style="
+                                                    background: url('{{ item.image.url }}') no-repeat;
+                                                    background-size: cover;
+                                                    background-position: center;
+                                                "></div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="image_product"></div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ product.get_absolute_url }}">
+                                        {{ product }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-danger text-center text-black-50" role="alert">
+                    Sorry, your search haven't result. Please search anymore !
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
