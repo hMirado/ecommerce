@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'products',
     'carts',
-    'orders'
+    'orders',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -148,6 +149,10 @@ MEDIA_ROOT = (
 )
 # MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static/media')
 # Si le dossier static ets dans le dossier parent ( avec les bin - .idea - inclue - lib )
+
+STRIPE_SECRET_KEY = "sk_test_JEUhCepQtUccNDR88gx8AKN000E8rhlnPg"
+STRIPE_PUBLISHABLE_KEY = "pk_test_LzNRfadvfUZZi1l29eSbvKyF00Zovy3Bil"
+
 
 '''
 Après avoir indiquer les chemins des fichiers statci on fait  "python manage.py collectstatic"
