@@ -15,7 +15,7 @@ def view(request):
         try:
             new_total = 0.00
             for item in cart.cartitem_set.all():
-                line_total = float(item.product.price) * float(item.quantity)
+                line_total = float(item.product.price) * item.quantity
                 new_total += line_total
 
             request.session['items_total'] = cart.cartitem_set.count()
@@ -60,11 +60,11 @@ def add_to_cart(request, slug):
             key = item
             val = request.POST[key]
             try:
-                v = Variation.objects.get(
-                    product=product, category__iexact=key, title__iexact=val)
+                v = Variation.objects.get(product=product, category__iexact=key, title__iexact=val)
                 product_var.append(v)
             except:
                 pass
+        
         cart_item = CartItem.objects.create(cart=cart, product=product)
         if len(product_var) > 0:
             cart_item.variations.add(*product_var)

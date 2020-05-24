@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
-from  django.urls import reverse
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 import time, string, random
 from .models import Order
 from carts.models import Cart
@@ -16,6 +17,7 @@ def id_generator(length = 10, str = string.ascii_lowercase + string.ascii_upperc
 
 
 # require user login
+@login_required
 def checkout(request):
     try:
         the_id = request.session['cart_id']
@@ -24,14 +26,18 @@ def checkout(request):
         the_id = None
         return HttpResponseRedirect(reverse("carts:my_cart")) # url (/my_cart/)
 
-    new_order, created = Order.objects.get_or_create(cart=cart)
-    if created:
-        # assign a user to the order
-        new_order.order_id = id_generator() # str(time.time())
+    try:
+        new_order = Order.objects.get(cart=cart)
+    except Order.DoesNotExist:
+        new_order = Order()
+        new_order.cart = cart
+        new_order.user = request.user
+        new_order.order_id = id_generator()
         new_order.save()
+    except:
+        # work on some error message
+        return HttpResponseRedirect(reverse("carts:my_cart"))
 
-    new_order.user = request.user
-    new_order.save()
     # assign address 
     # run credit card
     if new_order.status == "Finished":
