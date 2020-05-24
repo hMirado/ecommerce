@@ -11,6 +11,7 @@ urlpatterns = [
     path('carts/', include('carts.urls', namespace='carts')),  # cart url
     path('orders/', include('orders.urls', namespace='orders')),  # checkout url
     path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls',namespace='accounts')),  # accounts url
 ] 
 
 if settings.DEBUG:
