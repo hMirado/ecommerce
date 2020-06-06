@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1"]
 
+DEFAULT_FROM_EMAIL = "someemail@gmail.com"
+
 
 # Application definition
 
