@@ -31,6 +31,7 @@ class LoginForm(forms.Form):
 
 
 class RegistrationForm(forms.ModelForm):
+    email = forms.EmailField(label='Your Email', required=False)
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(), max_length=120, required=True)
     password2 = forms.CharField(label='Password confirmation',widget=forms.PasswordInput(), max_length=120, required=True)
 
@@ -45,9 +46,19 @@ class RegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Password don't match")
         return password2
 
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        user_count = User.objects.filter(email=email).count()
+        #user_count = len(User.objects.filter(email=email))
+        
+        if user_count > 0:
+            raise forms.ValidationError("This email has already been registred. Please rest your password")
+        return email
+
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
-        user.set_password(self.clean_data['password1'])
+        #user.set_password(self.clean_data['password1'])
+        user.password1 = self.cleaned_data.get('password1')
         if commit:
             user.save()
         return user
