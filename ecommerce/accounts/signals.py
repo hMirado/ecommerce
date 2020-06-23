@@ -1,4 +1,6 @@
 import stripe
+import random
+import hashlib
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -57,11 +59,16 @@ def user_created(sender, instance, created, *args, **kwargs):
     if created:
         get_create_stripe(user)
         # send our email
-        email_confimer, email_is_created = EmailConfirmed.get_or_create(user=user)
-        #if email_is_created:
-            # create hash
-            # send email 
-            # user.emailedconfirmed.email_user()   
+        email_confirmed, email_is_created = EmailConfirmed.objects.get_or_create(user=user)
+        if email_is_created:
+            short_hash = hashlib.sha1(str(random.random()).encode('utf-8')).hexdigest()[:5]
+            # username = user.username
+            base, domain = str(user.email).split("@")
+            activation_key = hashlib.sha1((short_hash + base).encode('utf-8')).hexdigest()
+            email_confirmed.activation_key = activation_key
+            email_confirmed.save()
+            email_confirmed.activate_user_email()
 
 
 post_save.connect(user_created, sender=User)
+

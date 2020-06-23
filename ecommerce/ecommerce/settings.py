@@ -26,9 +26,30 @@ SECRET_KEY = '55o&bxvfjb5dpl5)0k1cs-v-m#mx9l&*+*318*wucd_=byk48m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = [] # ["127.0.0.1"]
 
-DEFAULT_FROM_EMAIL = "someemail@gmail.com"
+
+'''
+DEFAULT_FROM_EMAIL = "miradotsangy@gmail.com"
+SERVER_EMAIL = "miradotsangy@gmail.com"
+EMAIL_HOST = "smtp.gmail.com" # '.sendgrid.net'
+EMAIL_HOST_USER = "miradotsangy@gmail.com"
+EMAIL_HOST_PASSWORD = "tsangy090197"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+'''
+DEFAULT_FROM_EMAIL = "miradotsangy@gmail.com"
+
+try:
+    from .email_settings import host, user, password
+    EMAIL_HOST = host # "smtp.gmail.com" # '.sendgrid.net'
+    SERVER_EMAIL = user
+    EMAIL_HOST_USER = user # "miradotsangy@gmail.com"
+    EMAIL_HOST_PASSWORD = password # "password"
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+except: pass
+
 
 
 # Application definition

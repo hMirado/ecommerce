@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import send_mail # EmailMessage
 from django.db import models
 from django.template.loader import render_to_string
 
@@ -28,10 +28,12 @@ class EmailConfirmed(models.Model):
             "activation_usrl": activation_usrl,
             "user": self.user.username
         }
-        subject = "Activate your email"
         message = render_to_string("accounts/activation_message.txt", context)
-        print(message)
-        # self.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+        subject = "Activate your email"
+        #print(message)
+        self.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
 
-    def email_user(self, subject, message, from_email=None, *kwargs):
-        send_mail(subject, message, from_email, [self.user.email], **kwargs)
+    def email_user(self, subject, message, from_email=None, **kwargs):
+        send_mail(subject, message, from_email, [self.user.email], kwargs)
+        # email = EmailMessage(subject, message, from_email, [self.user.email], **kwargs)
+        # email.send()

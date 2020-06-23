@@ -2,7 +2,7 @@ Hello {{ user }},
 
 Please activate your account here:
 
-{{ activation_key }}
+{{ activation_usrl }}
 
 Thank you !
 
