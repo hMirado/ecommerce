@@ -23,7 +23,7 @@ class EmailConfirmed(models.Model):
 
     def activate_user_email(self):
         # activation_usrl = "http://localhost:8000/accounts/accounts/activate/%s" %(self.activation_key)
-        activation_usrl = "%s%s/" %(settings.DEFAULT_SITE_URL, reverse("accounts:activation_view", args=[self.activation_key]))
+        activation_usrl = "%s/%s/" %(settings.DEFAULT_SITE_URL, reverse("accounts:activation_view", args=[self.activation_key]))
         context = {
             "activation_key": self.activation_key,
             "activation_usrl": activation_usrl,
