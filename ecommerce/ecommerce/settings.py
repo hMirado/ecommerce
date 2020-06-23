@@ -52,6 +52,11 @@ except: pass
 '''
 
 
+
+if DEBUG:
+    DEFAULT_SITE_URL = "http://localhost:8000"
+else: DEFAULT_SITE_URL = "http://localhost:8000" # url du site après hebergement
+
 # Application definition
 
 INSTALLED_APPS = [
