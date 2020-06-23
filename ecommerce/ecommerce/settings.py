@@ -29,10 +29,10 @@ DEBUG = True
 ALLOWED_HOSTS = [] # ["127.0.0.1"]
 
 
-'''
+
 DEFAULT_FROM_EMAIL = "miradotsangy@gmail.com"
 SERVER_EMAIL = "miradotsangy@gmail.com"
-EMAIL_HOST = "smtp.gmail.com" # '.sendgrid.net'
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = "miradotsangy@gmail.com"
 EMAIL_HOST_PASSWORD = "tsangy090197"
 EMAIL_PORT = 587
@@ -49,7 +49,7 @@ try:
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
 except: pass
-
+'''
 
 
 # Application definition

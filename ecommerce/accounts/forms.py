@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 
 User = get_user_model()
 
@@ -30,7 +31,7 @@ class LoginForm(forms.Form):
             return password
 
 
-class RegistrationForm(forms.ModelForm):
+class RegistrationForm(UserCreationForm):
     email = forms.EmailField(label='Your Email', required=False)
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(), max_length=120, required=True)
     password2 = forms.CharField(label='Password confirmation',widget=forms.PasswordInput(), max_length=120, required=True)
