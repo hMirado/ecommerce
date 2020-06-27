@@ -9,7 +9,9 @@ from .models import EmailConfirmed
 
 def logout_view(request):
     logout(request)
-    messages.success(request, "Successfully logged out.")
+    messages.success(request, "Successfully logged out. Feel free to <a href='%s'>login</a> again." %(reverse("accounts:auth_login")), extra_tags='safe')
+    messages.warning(request, "This is a warning")
+    messages.error(request, "this is a error")
     return HttpResponseRedirect('%s'%(reverse("accounts:auth_login")))
 
 
