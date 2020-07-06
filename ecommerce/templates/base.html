@@ -33,16 +33,18 @@
             margin-bottom: 0px;
             border-radius: 0px;
             text-align: center;
+            background-color: #DBDBDB;
+            margin: 0 auto;
         }
     </style>
     <!-- Custom styles for this template -->
 
 </head>
 <body>
-    {% if marketing_message %}
+    {% if request.session.marketing_message %}
         <div class="alert alert-dark alert-dismissible fade show alert-top-message" role="alert">
             <div class="container">
-                {{ marketing_message.message|safe }}
+                {{ request.session.marketing_message|safe }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

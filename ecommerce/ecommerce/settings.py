@@ -26,8 +26,7 @@ SECRET_KEY = '55o&bxvfjb5dpl5)0k1cs-v-m#mx9l&*+*318*wucd_=byk48m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [] # ["127.0.0.1"]
-
+ALLOWED_HOSTS = []  # ["127.0.0.1"]
 
 
 DEFAULT_FROM_EMAIL = "miradotsangy@gmail.com"
@@ -52,10 +51,10 @@ except: pass
 '''
 
 
-
 if DEBUG:
     DEFAULT_SITE_URL = "http://localhost:8000"
-else: DEFAULT_SITE_URL = "http://localhost:8000" # url du site après hebergement
+else:
+    DEFAULT_SITE_URL = "http://localhost:8000"  # url du site après hebergement
 
 # Application definition
 
@@ -73,14 +72,17 @@ INSTALLED_APPS = [
     'products',
 ]
 
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    # 'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'marketing.middleware.DisplayMarketing',
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
