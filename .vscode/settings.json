@@ -1,2 +1,7 @@
 {
+    "editor.fontSize": 13,
+    "editor.fontLigatures": null,
+    "editor.formatOnSave": true,
+    "editor.minimap.maxColumn": 80,
+    "editor.wordWrapColumn": 800
 }
