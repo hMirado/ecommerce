@@ -1,4 +1,5 @@
-# import datetime
+import datetime
+from django.utils import timezone
 from .models import MarketingMessage
 
 
@@ -7,7 +8,8 @@ class DisplayMarketing:
         self.get_response = get_response
 
     def __call__(self, request):
-        # print(datetime.datetime.now())
+        print("TimeZ : ",timezone.now())
+        print("Time : ", timezone.now() + datetime.timedelta(hours=8))
         try:
             request.session['marketing_message'] = MarketingMessage.objects.get_featured_item(
             ).message

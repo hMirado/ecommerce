@@ -11,8 +11,9 @@ urlpatterns = [
     path('carts/', include('carts.urls', namespace='carts')),  # cart url
     path('orders/', include('orders.urls', namespace='orders')),  # checkout url
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls',namespace='accounts')),  # accounts url
-] 
+    path('accounts/', include('accounts.urls', namespace='accounts')),  # accounts url
+    path('markeing/', include('marketing.urls', namespace='marketing')), # ajax | marketing message
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

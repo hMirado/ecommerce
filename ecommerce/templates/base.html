@@ -8,10 +8,6 @@
     <meta name="generator" content="Jekyll v4.0.1">
     <title>{% block head_title %}{% endblock %} Ecommerce with Bootstrap</title>
 
-    <!--
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/navbar-static/">
-    -->
-
     {% load  static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/navbar-top.css' %}"/>
@@ -45,7 +41,7 @@
         <div class="alert alert-dark alert-dismissible fade show alert-top-message" role="alert">
             <div class="container">
                 {{ request.session.marketing_message|safe }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <button id="marketing-message-btn" type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -76,10 +72,30 @@
         {% block content %} {% endblock %}
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready( () => {
+            $("#marketing-message-btn").click( () => {
+                $.ajax({
+                    url:"{% url 'marketing:dismiss_marketing_message' %}",
+                    type: "POST",
+                    data: {
+                        "dismiss-marketing": true,
+                        "csrfmiddlewaretoken": "{{ csrf_token }}",
+                    },
+                    success: (data) => {
+                        console.log('Success')
+                        console.log(data)
+                    },
+                    error: () => {
+                        console.log('Error! Something worng. Please try again lateru')
+                    },
+                });
+            });
+        });
+    </script>
 </body>
 </html>
 
