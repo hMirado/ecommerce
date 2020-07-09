@@ -160,6 +160,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+MARKETNG_HOURS_OFFSET = 3
+MARKETNG_SECONDS_OFFSET = 0
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
